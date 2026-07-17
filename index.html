@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ojiefoh ojiemhenke favour v1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Business Profit Calculator</h2>
+  
+  Cost Price: ₦ <input type="number" id="cost">
+  <br><br>
+  Selling Price: ₦ <input type="number" id="sell">
+  <br><br>
+  <button onclick="calculate()">Calculate</button>
+  
+  <h3 id="result"></h3>
+
+  <script>
+    function calculate() {
+      let cost = Number(document.getElementById('cost').value);
+      let sell = Number(document.getElementById('sell').value);
+      
+          if(cost <= 0){ 
+      document.getElementById('result').innerText = "Cost must be greater than 0";
+      return;
+    }
+    
+      let profit = sell - cost;
+      let percent = (profit / cost) * 100;
+      
+      document.getElementById('result').innerText = 
+        "Profit: ₦" + profit + " | " + percent.toFixed(1) + "%";
+    }
+  </script>
+</body>
+</html>
+
+
+
+
