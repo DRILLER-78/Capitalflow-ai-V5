@@ -18,25 +18,108 @@ body{
 }
 
 /* Scrollbar */
-
 ::-webkit-scrollbar{
     width:8px;
 }
-
 ::-webkit-scrollbar-thumb{
     background:#2563eb;
     border-radius:20px;
 }
 
 /* Main Container */
-
 body{
     max-width:1100px;
     margin:auto;
 }
 
-/* Heading */
+/* ==========================
+   PAYWALL / LOCK SCREEN 🔒
+========================== */
+#paywall {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg,#0f172a,#1e293b,#020617);
+    backdrop-filter: blur(20px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+}
 
+#paywall h1 {
+    font-size: 48px;
+    color: #38bdf8;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(56,189,248,.5);
+}
+
+#paywall p {
+    font-size: 18px;
+    color: #94a3b8;
+    margin-bottom: 30px;
+    background: transparent;
+}
+
+#paywall input {
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
+    border: 2px solid #2563eb;
+    border-radius: 12px;
+    background: #1e293b;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#paywall input:focus {
+    border: 2px solid #38bdf8;
+    background: #111827;
+    box-shadow: 0 0 20px rgba(56,189,248,.3);
+}
+
+#paywall button {
+    background: linear-gradient(90deg,#16a34a,#22c55e);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: .3s;
+    box-shadow: 0 8px 25px rgba(34,197,94,.4);
+}
+
+#paywall button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(34,197,94,.6);
+}
+
+#error {
+    color: #ef4444;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Hide app until login */
+#app {
+    display: none;
+}
+
+/* ==========================
+   APP STYLES BELOW
+========================== */
+
+/* Heading */
 h1{
     text-align:center;
     color:#38bdf8;
@@ -54,7 +137,6 @@ p i{
 }
 
 /* Cards */
-
 h3{
     background:#1e40af;
     padding:12px;
@@ -66,294 +148,179 @@ h3{
 }
 
 /* Inputs */
-
 input,
 select{
-
     width:100%;
     padding:14px;
     margin-top:8px;
     margin-bottom:15px;
-
     border:none;
     outline:none;
-
     border-radius:10px;
-
     background:#1e293b;
     color:white;
-
     font-size:16px;
-
     transition:.3s;
 }
 
 input:focus,
 select:focus{
-
     border:2px solid #38bdf8;
-
     background:#111827;
-
 }
 
 /* Buttons */
-
 button{
-
     background:linear-gradient(90deg,#2563eb,#06b6d4);
-
     color:white;
-
     border:none;
-
     padding:13px 22px;
-
     border-radius:10px;
-
     cursor:pointer;
-
     font-size:16px;
-
     font-weight:bold;
-
     margin:6px;
-
     transition:.3s;
-
     box-shadow:0 6px 18px rgba(0,0,0,.3);
-
 }
 
 button:hover{
-
     transform:translateY(-3px);
-
     box-shadow:0 10px 25px rgba(6,182,212,.45);
-
 }
 
 /* Dashboard */
-
 #totalRevenue,
 #totalProfit,
 #totalExpMonth,
 #netBalance,
 #bestCat,
 #totalTrans{
-
     color:#22c55e;
-
     font-weight:bold;
-
     font-size:22px;
-
 }
 
 /* Result */
-
 #revenue,
 #profit,
 #percent{
-
     color:#facc15;
-
     font-size:25px;
-
     font-weight:bold;
-
 }
 
 /* Expense List */
-
 #expenseList{
-
     background:rgba(255,255,255,.05);
-
     padding:20px;
-
     border-radius:12px;
-
     margin-top:20px;
-
     border:1px solid rgba(255,255,255,.1);
-
 }
 
 #expenseList button{
-
     background:#dc2626;
-
     padding:5px 10px;
-
     font-size:12px;
-
 }
 
 #expenseList button:hover{
-
     background:#ef4444;
-
 }
 
 /* Report Summary */
-
 #reportSummary{
-
     font-size:20px;
-
     color:#38bdf8;
-
     margin-top:10px;
-
 }
 
 /* HR */
-
 hr{
-
     border:none;
-
     border-top:1px solid rgba(255,255,255,.15);
-
     margin:35px 0;
-
 }
 
 /* Glass Effect */
-
 section,
 div{
-
     backdrop-filter:blur(10px);
-
 }
 
 /* Animation */
-
 h3,
 button,
 input,
 select{
-
     animation:fade .5s ease;
-
 }
 
 @keyframes fade{
-
 from{
-
 opacity:0;
-
 transform:translateY(15px);
-
 }
-
 to{
-
 opacity:1;
-
 transform:translateY(0);
-
 }
-
 }
 
 /* Responsive */
-
 @media(max-width:768px){
-
 body{
-
 padding:15px;
-
 }
-
 h1{
-
 font-size:28px;
-
 }
-
 button{
-
 width:100%;
-
 margin-top:10px;
-
 }
-
 input,
 select{
-
 font-size:15px;
-
 }
-
 }
 
 /* Dashboard Box */
-
 #reportSummary,
 #expenseList,
 p{
-
 background:rgba(255,255,255,.04);
-
 padding:15px;
-
 border-radius:10px;
-
 margin-bottom:12px;
-
 }
 
 /* Hover Cards */
-
 p:hover,
 #expenseList:hover{
-
 background:rgba(255,255,255,.08);
-
 transition:.3s;
-
 }
 
 /* Business Name */
-
 #bizName{
-
 font-size:18px;
-
 font-weight:bold;
-
 border:2px solid #2563eb;
-
 }
 
 /* Placeholder */
-
 ::placeholder{
-
 color:#94a3b8;
-
 }
 
 /* Footer Feel */
-
 body::after{
-
 content:"© TECH ENTREPRENEUR HUB";
-
 display:block;
-
 text-align:center;
-
 margin-top:40px;
-
 color:#64748b;
-
-font-size:14px;
-
+font-size:14px; 
 }
