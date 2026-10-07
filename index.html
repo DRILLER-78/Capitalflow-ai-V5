@@ -1,263 +1,183 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tech Entrepreneur Hub - Business Tracker</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Shop-Book Record</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- PAYWALL - MUST PAY FIRST -->
-<div id="paywall">
-  <h1>CAPITALFLOW AI PRO 🔒</h1>
-  <p>Pay ₦3,000 to get access</p>
-  <input type="email" id="email" placeholder="Enter your payment email">
-  <br><br>
-  <button onclick="checkAccess()">Login</button>
-  <p id="error" style="color:red"></p>
-</div>
+<header>
+    <h1>Shop-Book Record</h1>
+    <p>Simple Business Management</p>
+</header>
 
-<!-- YOUR ACTUAL APP -->
-<div id="app" style="display:none;">
+<main class="container">
 
-  <h1>TECH ENTREPRENEUR HUB</h1>
-  <p><i>Business Intelligence for Nigerian Entrepreneurs</i></p>
-  Business Name: <input type="text" id="bizName" placeholder="Your Business Name">
-  <hr>
+    <section class="dashboard">
+    
+    <div class="card sales">
+    <h3>Total Sales</h3>
+    <strong id="totalSales">₦0</strong>
+        </div>
 
-  <h3>Sales Tracker - Multiple Products</h3>
-  Product Name: <input type="text" id="product" placeholder="iPhone 14">
-  <br><br>
-  Cost Price: ₦ <input type="number" id="cost" placeholder="200000">
-  <br><br>
-  Selling Price: ₦ <input type="number" id="sell" placeholder="400000">
-  <br><br>
-  Quantity Sold: <input type="number" id="qty" placeholder="2" value="1">
-  <br><br>
-  <button onclick="calculate()">Calculate & Save Sale</button>
+    <div class="card expenses">
+        <h3>Total Expenses</h3>
+    <strong id="totalExpenses">₦
+        </strong>
+    </div>
 
-  <h3>Business Dashboard</h3>
-  <p><b>Total Revenue This Month:</b> ₦<span id="totalRevenue">0</span></p>
-  <p><b>Total Profit This Month:</b> ₦<span id="totalProfit">0</span></p>
-  <p><b>Total Expenses This Month:</b> ₦<span id="totalExpMonth">0</span></p>
-  <p><b>Net Balance:</b> ₦<span id="netBalance">0</span></p>
-  <p><b>Best Expense Category:</b> <span id="bestCat">None</span></p>
-  <p><b>Total Transactions:</b> <span id="totalTrans">0</span></p>
+    <div class="card profit">
+        <h3>Profit / Loss</h3>
+    <strong id="totalProfit">₦0</strong>
+        </div>
 
-  <hr>
+    <div class="card credit">
+        <h3>Outstanding Credit</h3>
+    <strong id="totalCredit">₦0</strong>
+        </div>
 
-  <h3>Results - Last Sale</h3>
-  <p>Revenue: ₦<span id="revenue">0</span></p>
-  <p>Profit: ₦<span id="profit">0</span></p>
-  <p>Profit %: <span id="percent">0</span>%</p>
+    </section>
 
-  <hr>
+    <section class="form-section">
 
-  <h3>Add Expense</h3>
-  Date: <input type="date" id="expDate">
-  <br><br>
-  Category:
-  <select id="category">
-    <option>Data</option>
-    <option>Transport</option>
-    <option>Rent</option>
-    <option>Ads</option>
-    <option>Food</option>
-    <option>Others</option>
-  </select>
-  <br><br>
-  Description: <input type="text" id="description" placeholder="Fuel for delivery">
-  <br><br>
-  Amount: ₦ <input type="number" id="amount" placeholder="5000">
-  <br><br>
-  <button onclick="saveExpense()">+ Save Expense</button>
+        <h2>Add Record</h2>
+  
+    <div class="form-grid">
 
-  <hr>
-  <h3>Expense Reports</h3>
-  <button onclick="showReport('daily')">Today</button>
-  <button onclick="showReport('weekly')">This Week</button>
-  <button onclick="showReport('monthly')">This Month</button>
-  <button onclick="showReport('all')">All Time</button>
-  <br><br>
-  <div id="reportSummary"></div>
-  <div id="expenseList"></div>
+    <input
+        type="date"
+        id="date"
+        >
 
-  <hr>
-  <button onclick="saveResult()">Save Result</button>
-  <button onclick="downloadPDF()">Download PDF</button>
-  <button onclick="downloadCSV()">Download CSV</button>
-  <button onclick="clearAll()">Clear All</button>
+    <input
+        type="text"
+        id="description"
+        placeholder="What happened?"
+            >
+            
+    <select id="type">
+    <option value="sale">Sale</option>
+    <option value="expense">Expense</option>
+    <option value="credit">Credit Given</option>
+    <option value="credit_payment">Credit Payment</option>
+            </select>
 
-</div>
+    <input
+        type="number"
+        id="amount"
+        placeholder="Amount ₦"
+        min="0"
+            >
 
-<script>
-// LIST OF PAID EMAILS - ADD PEOPLE HERE AFTER THEY PAY ₦3,000
-let paidEmails = [
-  "ojiefohojiemhenkefavour@gmail.com",
-  "ikhidefestus11@gmail.com"
-];
+        </div>
 
-function checkAccess() {
-  let email = document.getElementById('email').value.trim();
-  if(paidEmails.includes(email)) {
-    document.getElementById('paywall').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  } else {
-    document.getElementById('error').innerText = "No payment found for this email: " + email;
-  }
-}
+        <button
+            type="button"
+            class="add-btn"
+            onclick="addRecord()"
+        >
+            + Save Record
+        </button>
 
-let expenses = [];
-let sales = [];
-let lastProfit = 0;
-let lastPercent = 0;
-let lastRevenue = 0;
+    </section>
 
-document.getElementById('expDate').valueAsDate = new Date();
+    <section class="filter-section">
 
-function calculate() {
-  let product = document.getElementById('product').value || "Product";
-  let cost = Number(document.getElementById('cost').value) || 0;
-  let sell = Number(document.getElementById('sell').value) || 0;
-  let qty = Number(document.getElementById('qty').value) || 1;
-  if(cost <= 0){ alert("Cost must be greater than 0"); return; }
+    <h2>Records</h2>
 
-  let revenue = sell * qty;
-  let profit = (sell - cost) * qty;
-  let percent = cost > 0? ((sell - cost) / cost) * 100 : 0;
+    <input
+        type="text"
+        id="search"
+        placeholder="Search records...">
 
-  sales.push({product, cost, sell, qty, revenue, profit, date: new Date().toISOString().split('T')[0]});
+    <div class="period-buttons">
 
-  lastProfit = profit; lastPercent = percent; lastRevenue = revenue;
+    <button
+        type="button"
+        id="dailyBtn"
+            >
+        Daily
+    </button>
 
-  document.getElementById('revenue').innerText = revenue.toLocaleString();
-  document.getElementById('profit').innerText = profit.toLocaleString();
-  document.getElementById('percent').innerText = percent.toFixed(1);
-  document.getElementById('product').value = "";
-  updateDashboard();
-}
+    <button
+        type="button"
+        id="weeklyBtn"
+            >
+       Weekly
+        </button>
 
-function saveExpense() {
-  let amount = Number(document.getElementById('amount').value) || 0;
-  let category = document.getElementById('category').value;
-  let date = document.getElementById('expDate').value;
-  let description = document.getElementById('description').value;
-  if(amount <= 0) { alert("Amount must be greater than 0"); return; }
-  if(date == "") { alert("Please pick a date"); return; }
+    <button
+        type="button"
+        id="monthlyBtn"
+            >
+        Monthly
+        </button>
 
-  expenses.push({id: Date.now(), amt: amount, cat: category, date: date, desc: description});
-  document.getElementById('amount').value = ""; document.getElementById('description').value = "";
-  showReport('all'); updateDashboard();
-}
+    <button
+        type="button"
+        id="yearlyBtn"
+        >
+        Yearly
+        </button>
 
-function deleteExpense(id) {
-  if(confirm("Delete this expense?")){
-    expenses = expenses.filter(e => e.id!== id);
-    showReport('all'); updateDashboard();
-  }
-}
+        </div>
 
-function showReport(filter) {
-  let today = new Date(); let filtered = [];
-  if(filter == 'daily'){ let todayStr = today.toISOString().split('T')[0]; filtered = expenses.filter(e => e.date == todayStr); document.getElementById('reportSummary').innerHTML = `<b>Daily Expenses - Today</b>`; }
-  else if(filter == 'weekly'){ let weekAgo = new Date(today); weekAgo.setDate(today.getDate() - 7); filtered = expenses.filter(e => new Date(e.date) >= weekAgo); document.getElementById('reportSummary').innerHTML = `<b>Weekly Expenses - Last 7 Days</b>`; }
-  else if(filter == 'monthly'){ let month = today.getMonth(); let year = today.getFullYear(); filtered = expenses.filter(e => { let d = new Date(e.date); return d.getMonth() == month && d.getFullYear() == year; }); document.getElementById('reportSummary').innerHTML = `<b>Monthly Expenses - This Month</b>`; }
-  else { filtered = expenses; document.getElementById('reportSummary').innerHTML = `<b>All Time Expenses</b>`; }
+    </section>
 
-  let total = 0; let listHTML = "<br>";
-  for(let i = 0; i < filtered.length; i++) {
-    total += filtered[i].amt;
-    listHTML += `${filtered[i].date} | ${filtered[i].cat} | ₦${filtered[i].amt.toLocaleString()} | ${filtered[i].desc}
-    <button onclick="deleteExpense(${filtered[i].id})">[X]</button><br>`;
-  }
-  listHTML += `<br><b>Total: ₦${total.toLocaleString()}</b>`;
-  document.getElementById('expenseList').innerHTML = listHTML;
-}
+    <section class="table-section">
 
-function updateDashboard() {
-  let today = new Date(); let month = today.getMonth(); let year = today.getFullYear();
-  let monthlySales = sales.filter(s => { let d = new Date(s.date); return d.getMonth() == month && d.getFullYear() == year; });
-  let monthlyExp = expenses.filter(e => { let d = new Date(e.date); return d.getMonth() == month && d.getFullYear() == year; });
-  let totalRevenue = monthlySales.reduce((a,b) => a + b.revenue, 0);
-  let totalProfit = monthlySales.reduce((a,b) => a + b.profit, 0);
-  let totalExpMonth = monthlyExp.reduce((a,b) => a + b.amt, 0);
-  let catTotals = {}; monthlyExp.forEach(e => { catTotals[e.cat] = (catTotals[e.cat] || 0) + e.amt; });
-  let bestCat = Object.keys(catTotals).length > 0? Object.keys(catTotals).reduce((a, b) => catTotals[a] > catTotals[b]? a : b) : "None";
+    <h2 id="recordTitle">Daily  
+        Records</h2>
+        
+    <div class="record-actions">
 
-  document.getElementById('totalRevenue').innerText = totalRevenue.toLocaleString();
-  document.getElementById('totalProfit').innerText = totalProfit.toLocaleString();
-  document.getElementById('totalExpMonth').innerText = totalExpMonth.toLocaleString();
-  document.getElementById('netBalance').innerText = (totalProfit - totalExpMonth).toLocaleString();
-  document.getElementById('bestCat').innerText = bestCat;
-  document.getElementById('totalTrans').innerText = sales.length + expenses.length;
-}
+    <button
+        type="button"
+        onclick="saveResult()"
+        >
+        Save Result
+        </button>
 
-function saveResult() {
-  let data = {bizName: document.getElementById('bizName').value, sales, expenses, date: new Date().toLocaleString()};
-  localStorage.setItem('techHubDataV51', JSON.stringify(data));
-  alert("Result Saved!");
-}
+    <button
+        type="button"
+        onclick="downloadCSV()"
+        >
+        Download CSV
+            </button>
 
-function downloadCSV() {
-  let csv = "Date,Type,Product/Category,Description,Amount,Qty\n";
-  sales.forEach(s => { csv += `${s.date},Sale,${s.product},,${s.revenue},${s.qty}\n`; });
-  expenses.forEach(e => { csv += `${e.date},Expense,${e.cat},${e.desc},${e.amt},\n`; });
-  let blob = new Blob([csv], {type: 'text/csv'});
-  let url = URL.createObjectURL(blob);
-  let a = document.createElement('a'); a.href = url; a.download = `TEH_Business_Report_${Date.now()}.csv`; a.click();
-  alert("CSV Downloaded!");
-}
+     <button
+         type="button"
+         onclick="clearAll()"
+         >
+         Clear All
+     </button>
 
-function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let biz = document.getElementById('bizName').value || "Your Business";
-  let totalRevenue = sales.reduce((a,b) => a + b.revenue, 0);
-  let totalProfit = sales.reduce((a,b) => a + b.profit, 0);
-  let totalExp = expenses.reduce((a,b) => a + b.amt, 0);
+    </div>
+    <br>
+    <div class="table-container">
+ 
+    <table>
+      <thead>
+    <tr>
+      <th>Date</th>
+       <th>Description</th>
+    </th>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Action</th>
+    </tr>
+    </thead>
 
-  doc.setFontSize(16);
-  doc.text(`TECH ENTREPRENEUR HUB`, 20, 20);
-  doc.setFontSize(12);
-  doc.text(`${biz} - Business Report`, 20, 30);
-  doc.setFontSize(11);
-  doc.text(`Date: ${new Date().toLocaleString()}`, 20, 40);
-  doc.text(`Total Revenue: ₦${totalRevenue.toLocaleString()}`, 20, 50);
-  doc.text(`Total Profit: ₦${totalProfit.toLocaleString()}`, 20, 60);
-  doc.text(`Total Expenses: ₦${totalExp.toLocaleString()}`, 20, 70);
-  doc.text(`Net Balance: ₦${(totalProfit - totalExp).toLocaleString()}`, 20, 80);
+      <tbody id="recordTable">
+    </tbody>
+    </table>
 
-  let y = 95;
-  doc.text("Expenses:", 20, y);
-  expenses.forEach(item => {
-    y += 8; if(y > 280){ doc.addPage(); y = 20; }
-    doc.text(`${item.date} - ${item.cat} - ₦${item.amt.toLocaleString()} - ${item.desc}`, 20, y);
-  });
-  doc.save(`TEH_Report_${Date.now()}.pdf`);
-  alert("PDF Downloaded!");
-}
+    </div>
+    </section>
 
-function clearAll() {
-  if(confirm("Clear everything?")) {
-    expenses = []; sales = []; lastProfit = 0;
-    document.getElementById('bizName').value = "";
-    document.getElementById('expenseList').innerHTML = "";
-    updateDashboard();
-    localStorage.removeItem('techHubDataV51');
-  }
-}
+</main>
 
-// LOAD SAVED DATA
-window.onload = function() {
-  let saved = localStorage.getItem('techHubDataV51');
-  if(saved) {
-    let data = JSON.parse(saved);
-    document.getElementById('bizName').value = data.bizName;
-    sales = data.sales || [];
-    expenses = data.expenses || [];
-    showReport('all'); updateDashboard();
-  }
-}
-</script>
+<script src="script.js"></script>
+
 </body>
 </html>
