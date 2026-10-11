@@ -22,12 +22,12 @@
 
     <div class="card expenses">
         <h3>Total Expenses</h3>
-    <strong id="totalExpenses">₦
+    <strong id="totalExpenses">₦0
         </strong>
     </div>
 
     <div class="card profit">
-        <h3>Profit / Loss</h3>
+        <h3>Profit</h3>
     <strong id="totalProfit">₦0</strong>
         </div>
 
@@ -86,7 +86,7 @@
     <h2>Records</h2>
 
     <input
-        type="text"
+        type="search"
         id="search"
         placeholder="Search records...">
 
@@ -137,21 +137,21 @@
         >
         Save Result
         </button>
-
+        
     <button
         type="button"
-        onclick="downloadCSV()"
+        onclick="downloadPDF()"
         >
-        Download CSV
-            </button>
-
+        Download PDF 
+          </button>
+        
      <button
          type="button"
          onclick="clearAll()"
          >
          Clear All
      </button>
-
+     
     </div>
     <br>
     <div class="table-container">
@@ -171,13 +171,11 @@
       <tbody id="recordTable">
     </tbody>
     </table>
-
     </div>
     </section>
 
 </main>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
